@@ -1,19 +1,24 @@
 package com.project.documentworkflow.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import com.project.documentworkflow.model.Decision;
-import com.project.documentworkflow.service.DecisionService;
+import com.project.documentworkflow.service.DecisionEngineService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/decisions")
 public class DecisionController {
 
-    @Autowired
-    private DecisionService decisionService;
+    public final DecisionEngineService decisionEngineService;
 
-    @PostMapping
-    public Decision createDecision(@RequestBody Decision decision) {
-        return decisionService.saveDecision(decision);
+    public DecisionController(DecisionEngineService decisionEngineService) {
+        this.decisionEngineService = decisionEngineService;
+    }
+
+    @PostMapping("/evaluate")
+    public Decision evaluateDecision(@RequestBody DecisionRequest request) {
+        return decisionEngineService.evaluateDecision(
+                request.getDocumentId(),
+                request.getOcrDataId()
+        );
     }
 }

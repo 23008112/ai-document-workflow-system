@@ -1,15 +1,17 @@
 package com.project.documentworkflow.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.project.documentworkflow.model.Rule;
 import com.project.documentworkflow.repository.RuleRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RuleService {
 
-    @Autowired
-    private RuleRepository ruleRepository;
+    private final RuleRepository ruleRepository;
+
+    public RuleService(RuleRepository ruleRepository) {
+        this.ruleRepository = ruleRepository;
+    }
 
     public Rule saveRule(Rule rule) {
         return ruleRepository.save(rule);

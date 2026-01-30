@@ -1,40 +1,49 @@
 package com.project.documentworkflow.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.project.documentworkflow.model.*;
 import com.project.documentworkflow.repository.*;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DecisionEngineService {
 
-    @Autowired
-    private RuleRepository ruleRepository;
+    private final DocumentRepository documentRepository;
+    private final OCRDataRepository ocrDataRepository;
+    private final RuleRepository ruleRepository;
+    private final DecisionRepository decisionRepository;
 
-    @Autowired
-    private DecisionRepository decisionRepository;
+    public DecisionEngineService(
+            DocumentRepository documentRepository,
+            OCRDataRepository ocrDataRepository,
+            RuleRepository ruleRepository,
+            DecisionRepository decisionRepository) {
 
-    public Decision evaluateDecision(Document document, OCRData ocrData) {
+        this.documentRepository = documentRepository;
+        this.ocrDataRepository = ocrDataRepository;
+        this.ruleRepository = ruleRepository;
+        this.decisionRepository = decisionRepository;
+    }
 
-        List<Rule> rules = ruleRepository.findAll();
+    public Decision evaluateDecision(Long documentId, Long ocrDataId) {
 
-        String finalDecision = "APPROVE";
+        Document document = documentRepository.findById(documentId)
+                .orElseThrow(() -> new RuntimeException("Document not found"));
 
-        for (Rule rule : rules) {
-            if (ocrData.getConfidenceScore() < rule.getThresholdValue()) {
-                finalDecision = "REVIEW";
-                break;
-            }
-        }
+        OCRData ocrData = ocrDataRepository.findById(ocrDataId)
+                .orElseThrow(() -> new RuntimeException("OCR data not found"));
+
+        Rule rule = ruleRepository.findAll().get(0);
 
         Decision decision = new Decision();
-        decision.setDecisionType(finalDecision);
+
+        if (ocrData.getConfidenceScore() < rule.getThresholdValue()) {
+            decision.setDecisionType("REVIEW");
+        } else {
+            decision.setDecisionType("APPROVE");
+        }
+
         decision.setDecisionSource("SYSTEM");
-        decision.setDecisionTime(LocalDateTime.now());
-        decision.setDocument(document);
+        decision.setDocument(document.getDocumentId());
 
         return decisionRepository.save(decision);
     }

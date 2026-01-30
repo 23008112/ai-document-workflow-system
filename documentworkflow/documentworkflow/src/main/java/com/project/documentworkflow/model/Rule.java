@@ -1,9 +1,11 @@
 package com.project.documentworkflow.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "rules")
 public class Rule {
 
     @Id
@@ -14,9 +16,28 @@ public class Rule {
     private String conditionDescription;
     private Double thresholdValue;
 
-    // ✅ VERY IMPORTANT GETTER
+    public Long getRuleId() {
+        return ruleId;
+    }
+
+    public String getRuleName() {
+        return ruleName;
+    }
+
+    public String getConditionDescription() {
+        return conditionDescription;
+    }
+
     public Double getThresholdValue() {
         return thresholdValue;
+    }
+
+    public void setRuleName(String ruleName) {
+        this.ruleName = ruleName;
+    }
+
+    public void setConditionDescription(String conditionDescription) {
+        this.conditionDescription = conditionDescription;
     }
 
     public void setThresholdValue(Double thresholdValue) {

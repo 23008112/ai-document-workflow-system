@@ -8,15 +8,43 @@ public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long documentId;
+    private Document documentId;
 
     private String documentType;
     private String filePath;
     private String status;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    // --- GETTERS ---
+    public Document getDocumentId() {
+        return documentId;
+    }
 
-    // getters & setters
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    // --- SETTERS ---
+    public void setDocumentId(Document documentId) {
+        this.documentId = documentId;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
