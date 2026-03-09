@@ -6,17 +6,17 @@ const G = `
   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --bg:#f0f4fa;--surface:#ffffff;--surface2:#e8eef8;
-    --border:#cdd8ee;--border2:#b0c0e0;
-    --text:#0a1628;--text2:#2d4270;--muted:#7a8fb5;
-    --accent:#1a3a6e;--accent-light:#e8eef8;--accent-dark:#0f2550;
-    --success:#1a6e3a;--success-light:#e8f5ee;
-    --danger:#b82020;--danger-light:#faeaea;
-    --warn:#b87010;--warn-light:#fdf3e0;
-    --p1:#1a2e6e;--p1l:#e8ecf8;--p2:#1a5080;--p2l:#e5f0f8;--p3:#1a6e50;--p3l:#e5f5f0;
+    --bg:#f4f6fb;--surface:#ffffff;--surface2:#f1f3f9;
+    --border:#e4e8f0;--border2:#cdd2e8;
+    --text:#0d1130;--text2:#4a5175;--muted:#8891b0;
+    --accent:#2563eb;--accent-light:#eff4ff;--accent-dark:#1d4ed8;
+    --success:#059669;--success-light:#ecfdf5;
+    --danger:#dc2626;--danger-light:#fef2f2;
+    --warn:#d97706;--warn-light:#fffbeb;
+    --p1:#7c3aed;--p1l:#f5f3ff;--p2:#2563eb;--p2l:#eff4ff;--p3:#059669;--p3l:#ecfdf5;
     --font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;
-    --shadow:0 1px 3px #0a16280a,0 4px 16px #0a16280a;
-    --shadow-lg:0 4px 24px #0a162818,0 1px 4px #0a16280a;
+    --shadow:0 1px 3px #0d113008,0 4px 16px #0d113008;
+    --shadow-lg:0 4px 24px #0d113014,0 1px 4px #0d113008;
     --r:10px;
   }
   body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;-webkit-font-smoothing:antialiased}
@@ -147,7 +147,10 @@ function Sidebar({ page, setPage, user, onLogout, hasRules }) {
   return (
     <aside style={{ width: 228, background: "var(--surface)", borderRight: "1px solid var(--border)", display: "flex", flexDirection: "column", height: "100vh", position: "sticky", top: 0, flexShrink: 0 }}>
       <div style={{ padding: "20px 18px 16px", borderBottom: "1px solid var(--border)" }}>
-        <div style={{ fontWeight: 800, fontSize: 17, letterSpacing: "-.03em" }}>Flow<span style={{ color: "var(--accent)" }}>Doc</span></div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <img src="/favicon.svg" width={36} height={36} alt="DocFlow" />
+          <div style={{ fontWeight: 800, fontSize: 17, letterSpacing: "-.03em" }}>Flow<span style={{ color: "var(--accent)" }}>Doc</span></div>
+        </div>
         <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "var(--mono)", marginTop: 2, letterSpacing: ".08em" }}>INTELLIGENT WORKFLOW</div>
       </div>
 
@@ -225,34 +228,23 @@ function LoginPage({ onLogin, onGoRegister }) {
   return (
     <div style={{ minHeight: "100vh", display: "flex", background: "var(--bg)" }}>
       {/* Left */}
-      <div style={{ flex: 1, background: "linear-gradient(145deg, #0a1628 0%, #1a3a6e 60%, #2952a0 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 52, position: "relative", overflow: "hidden", borderRight: "1px solid var(--border)" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 20% 80%, #ffffff12 0%, transparent 50%), radial-gradient(circle at 80% 20%, #ffffff08 0%, transparent 50%)" }} />
+      <div style={{ flex: 1, background: "linear-gradient(145deg, #1e3a8a 0%, #2563eb 60%, #60a5fa 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 52, position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 15% 85%, #ffffff15 0%, transparent 45%), radial-gradient(circle at 85% 15%, #ffffff08 0%, transparent 45%)" }} />
         <div style={{ position: "relative", zIndex: 1, color: "#fff", maxWidth: 380 }}>
           <div style={{ fontSize: 44, fontWeight: 800, letterSpacing: "-.04em", marginBottom: 14 }}>Flow<span style={{ opacity: .65 }}>Doc</span></div>
-          <div style={{ fontSize: 16, opacity: .85, lineHeight: 1.8, marginBottom: 40 }}>
-            Intelligent document workflow — upload any document, define your own rules, and let the system route, evaluate and track everything automatically.
+          <div style={{ fontSize: 16, opacity: .85, lineHeight: 1.75, marginBottom: 36 }}>
+            Universal document intelligence system for any organization — process, route, and track all your documents automatically.
           </div>
-          <div style={{ display: "grid", gap: 14 }}>
-            {[
-              { icon: "⚙", title: "Your rules, your logic", desc: "Define approval conditions that match exactly what your process requires" },
-              { icon: "⬡", title: "Priority-based routing", desc: "Documents are evaluated and sorted by priority level and department" },
-              { icon: "◆", title: "Clear decisions with reasons", desc: "Every approval or rejection includes the exact reason why" },
-              { icon: "≡", title: "Full audit trail", desc: "Every action is logged — who did what, when, and why" },
-            ].map(f => (
-              <div key={f.icon} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <div style={{ width: 32, height: 32, borderRadius: 8, background: "#ffffff18", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, flexShrink: 0 }}>{f.icon}</div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 2 }}>{f.title}</div>
-                  <div style={{ fontSize: 12, opacity: .7, lineHeight: 1.5 }}>{f.desc}</div>
-                </div>
-              </div>
+          <div style={{ display: "grid", gap: 10 }}>
+            {["🎓  Colleges — Scholarship & admission", "🏥  Hospitals — Patient & billing docs", "🏢  Companies — Invoices & contracts", "🏛  Government — Applications & permits", "⚖  Legal firms — Case document routing"].map(t => (
+              <div key={t} style={{ fontSize: 13, opacity: .8, display: "flex", alignItems: "center", gap: 8 }}>{t}</div>
             ))}
           </div>
         </div>
       </div>
 
       {/* Right */}
-      <div style={{ width: 460, display: "flex", alignItems: "center", justifyContent: "center", padding: 48, background: "var(--bg)" }}>
+      <div style={{ width: 460, display: "flex", alignItems: "center", justifyContent: "center", padding: 48 }}>
         <div style={{ width: "100%", animation: "fadeUp .4s ease" }}>
           <h2 style={{ fontSize: 25, fontWeight: 800, letterSpacing: "-.03em", marginBottom: 5 }}>Welcome back</h2>
           <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 28 }}>Sign in to your FlowDoc workspace</p>
@@ -299,7 +291,7 @@ function RegisterPage({ onGoLogin }) {
         </div>
         <Card style={{ padding: 26 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <Input label="Full Name" value={form.name} onChange={e => set("name", e.target.value)} placeholder="e.g. Dr. Aravind Kumar" required />
+            <Input label="Full Name" value={form.name} onChange={e => set("name", e.target.value)} placeholder="name" required />
             <Input label="Email" type="email" value={form.email} onChange={e => set("email", e.target.value)} placeholder="admin@college.edu" required />
             <Input label="Password" type="password" value={form.password} onChange={e => set("password", e.target.value)} placeholder="minimum 6 characters" required />
             <Select label="Role" value={form.role} onChange={e => set("role", e.target.value)}
@@ -453,7 +445,7 @@ function DashboardPage({ token, user, setPage }) {
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 14, marginBottom: 22 }}>
-        <div onClick={() => setPage("upload")} style={{ background: "linear-gradient(140deg, #0a1628, #1a3a6e)", border: "none", borderRadius: "var(--r)", padding: "20px 22px", cursor: "pointer", color: "#fff", transition: "transform .15s, box-shadow .15s", boxShadow: "var(--shadow)" }}
+        <div onClick={() => setPage("upload")} style={{ background: "linear-gradient(140deg, #1e3a8a, #2563eb)", borderRadius: "var(--r)", padding: "20px 22px", cursor: "pointer", color: "#fff", transition: "transform .15s, box-shadow .15s", boxShadow: "var(--shadow)" }}
           onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "var(--shadow-lg)"; }}
           onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "var(--shadow)"; }}>
           <div style={{ fontSize: 22, marginBottom: 8 }}>↑</div>
