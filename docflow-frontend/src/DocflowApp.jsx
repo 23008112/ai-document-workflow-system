@@ -148,7 +148,7 @@ function Sidebar({ page, setPage, user, onLogout, hasRules }) {
     <aside style={{ width: 228, background: "var(--surface)", borderRight: "1px solid var(--border)", display: "flex", flexDirection: "column", height: "100vh", position: "sticky", top: 0, flexShrink: 0 }}>
       <div style={{ padding: "20px 18px 16px", borderBottom: "1px solid var(--border)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <img src="/favicon.svg" width={36} height={36} alt="DocFlow" />
+          <img src="/docflow-icon.jpeg" width={36} height={36} alt="DocFlow" />
           <div style={{ fontWeight: 800, fontSize: 17, letterSpacing: "-.03em" }}>Flow<span style={{ color: "var(--accent)" }}>Doc</span></div>
         </div>
         <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "var(--mono)", marginTop: 2, letterSpacing: ".08em" }}>INTELLIGENT WORKFLOW</div>
@@ -207,7 +207,7 @@ function PageWrap({ title, subtitle, action, children }) {
   );
 }
 
-// ── LOGIN ──────────────────────────────────────────────
+// ── LOGIN ─────────────────────────────────────────────
 function LoginPage({ onLogin, onGoRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -378,7 +378,7 @@ function RuleSetupPage({ token, setToast, onRulesReady }) {
                 <span style={{ fontWeight: 800, fontSize: 18, color: "var(--accent)", fontFamily: "var(--mono)", minWidth: 44 }}>{(parseFloat(form.thresholdValue || 0) * 100).toFixed(0)}%</span>
               </div>
             </Field>
-            <Select label="Priority" value={form.priority} onChange={e => sf("priority", e.target.value)}
+            <Select label="Priority"value={form.priority} onChange={e => sf("priority", e.target.value)}
               hint="Priority 1 rules are checked before priority 2, 3..."
               options={[{ value: "1", label: "Priority 1 — HIGH (most important, checked first)" }, { value: "2", label: "Priority 2 — MEDIUM" }, { value: "3", label: "Priority 3 — LOW (checked last)" }]} />
             <Select label="Document Type — this rule applies to:" value={form.documentType} onChange={e => sf("documentType", e.target.value)}
@@ -566,14 +566,13 @@ function DashboardPage({ token, user, setPage }) {
 }
 
 // ── UPLOAD ─────────────────────────────────────────────
-function UploadPage({ token, setToast, setPage, setLastUpload }) {
+function UploadPage({ token, setToast, setPage, setLastUpload}){
   const [file, setFile] = useState(null);
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
 
   function onDrop(e) { e.preventDefault(); setDragging(false); const f = e.dataTransfer.files[0]; if (f) setFile(f); }
-
   async function upload() {
     if (!file) { setToast({ msg: "Please select a file first", type: "warn" }); return; }
     setLoading(true); setResult(null);
@@ -586,7 +585,6 @@ function UploadPage({ token, setToast, setPage, setLastUpload }) {
     } catch { setToast({ msg: "Cannot connect to server", type: "error" }); }
     setLoading(false);
   }
-
   const approved = result?.decision === "APPROVED";
   const rejected = result?.decision === "REJECTED";
 
