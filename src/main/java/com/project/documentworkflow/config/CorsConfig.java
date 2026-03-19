@@ -13,14 +13,13 @@ public class CorsConfig {
 
     @Bean
     public CorsFilter corsFilter() {
-
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:5173",
                 "http://localhost:3000",
-                "https://docflow-backend-fhv4.onrender.com",
-                "https://*.vercel.app"
+                "https://docflow-system.vercel.app",
+                "https://docflow-backend-fhv4.onrender.com"
         ));
 
         config.setAllowedMethods(Arrays.asList(

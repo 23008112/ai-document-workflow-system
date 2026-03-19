@@ -25,6 +25,7 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> {}) // Uses CorsConfig.java CorsFilter bean automatically
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
@@ -32,12 +33,13 @@ public class SecurityConfig {
                         // ── Public — no token needed ──
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // ── ADMIN only ──
                         .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/users/*/role").hasRole("ADMIN")
 
-                        // ── ADMIN + STAFF: upload, forward, rules, audit ──
+                        // ── ADMIN + STAFF ──
                         .requestMatchers(HttpMethod.POST, "/api/upload").hasAnyRole("ADMIN", "STAFF")
                         .requestMatchers(HttpMethod.POST, "/api/forward").hasAnyRole("ADMIN", "STAFF")
                         .requestMatchers(HttpMethod.POST, "/api/rules").hasAnyRole("ADMIN", "STAFF")
@@ -45,7 +47,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/rules/**").hasAnyRole("ADMIN", "STAFF")
                         .requestMatchers(HttpMethod.GET, "/api/audit/**").hasAnyRole("ADMIN", "STAFF")
 
-                        // ── All authenticated users: everything else ──
+                        // ── All authenticated ──
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
