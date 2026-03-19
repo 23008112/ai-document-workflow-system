@@ -148,7 +148,7 @@ function Sidebar({ page, setPage, user, onLogout, hasRules }) {
     <aside style={{ width: 228, background: "var(--surface)", borderRight: "1px solid var(--border)", display: "flex", flexDirection: "column", height: "100vh", position: "sticky", top: 0, flexShrink: 0 }}>
       <div style={{ padding: "20px 18px 16px", borderBottom: "1px solid var(--border)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <img src="/docflow-icon.jpeg" width={36} height={36} alt="DocFlow" />
+          <img src="/favicon.svg" width={36} height={36} alt="DocFlow" />
           <div style={{ fontWeight: 800, fontSize: 17, letterSpacing: "-.03em" }}>Flow<span style={{ color: "var(--accent)" }}>Doc</span></div>
         </div>
         <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "var(--mono)", marginTop: 2, letterSpacing: ".08em" }}>INTELLIGENT WORKFLOW</div>
@@ -187,9 +187,6 @@ function Sidebar({ page, setPage, user, onLogout, hasRules }) {
           </div>
         </div>
         <Btn variant="ghost" onClick={onLogout} full size="sm">Sign out</Btn>
-        <div style={{ textAlign: "center", marginTop: 8, fontSize: 10, color: "var(--muted)", letterSpacing: ".03em" }}>
-          © 2026 <span style={{ fontWeight: 700 }}>Aravind R</span>
-        </div>
       </div>
     </aside>
   );
@@ -238,27 +235,16 @@ function LoginPage({ onLogin, onGoRegister }) {
           <div style={{ fontSize: 16, opacity: .85, lineHeight: 1.75, marginBottom: 36 }}>
             Universal document intelligence system for any organization — process, route, and track all your documents automatically.
           </div>
-          <div style={{ display: "grid", gap: 14 }}>
-            {[
-              { icon: "⚙", title: "Your rules, your logic", desc: "Define approval conditions that match exactly what your process requires" },
-              { icon: "⬡", title: "Priority-based routing", desc: "Documents are evaluated and sorted by priority level and department" },
-              { icon: "♦", title: "Clear decisions with reasons", desc: "Every approval or rejection includes the exact reason why" },
-              { icon: "≡", title: "Full audit trail", desc: "Every action is logged — who did what, when, and why" },
-            ].map(f => (
-              <div key={f.title} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 9, background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, flexShrink: 0, backdropFilter: "blur(4px)" }}>{f.icon}</div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: 13, color: "#fff", marginBottom: 2 }}>{f.title}</div>
-                  <div style={{ fontSize: 12, opacity: .75, lineHeight: 1.5, color: "#fff" }}>{f.desc}</div>
-                </div>
-              </div>
+          <div style={{ display: "grid", gap: 10 }}>
+            {["🎓  Colleges — Scholarship & admission", "🏥  Hospitals — Patient & billing docs", "🏢  Companies — Invoices & contracts", "🏛  Government — Applications & permits", "⚖  Legal firms — Case document routing"].map(t => (
+              <div key={t} style={{ fontSize: 13, opacity: .8, display: "flex", alignItems: "center", gap: 8 }}>{t}</div>
             ))}
           </div>
         </div>
       </div>
 
       {/* Right */}
-      <div style={{ width: 560, display: "flex", alignItems: "center", justifyContent: "center", padding: 48 }}>
+      <div style={{ width: 460, display: "flex", alignItems: "center", justifyContent: "center", padding: 48 }}>
         <div style={{ width: "100%", animation: "fadeUp .4s ease" }}>
           <h2 style={{ fontSize: 25, fontWeight: 800, letterSpacing: "-.03em", marginBottom: 5 }}>Welcome back</h2>
           <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 28 }}>Sign in to your FlowDoc workspace</p>
@@ -274,9 +260,6 @@ function LoginPage({ onLogin, onGoRegister }) {
             No account? <span onClick={onGoRegister} style={{ color: "var(--accent)", cursor: "pointer", fontWeight: 600 }}>Create one →</span>
           </div>
         </div>
-      </div>
-      <div style={{ position: "fixed", bottom: 14, right: 24, fontSize: 11, color: "var(--muted)", letterSpacing: ".02em" }}>
-        © 2026 Designed & Developed by <span style={{ fontWeight: 700, color: "var(--text2)" }}>Aravind R</span>
       </div>
     </div>
   );
@@ -544,7 +527,25 @@ function UploadPage({ token, setToast, setPage, setLastUpload }) {
           {loading ? "Processing document..." : "Upload & Process →"}
         </Btn>
 
-        {result && (
+        {result?.error && (
+          <Card style={{ overflow: "hidden", animation: "fadeUp .4s ease" }}>
+            <div style={{ padding: "13px 18px", background: "var(--danger-light)", display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 22 }}>⚠</span>
+              <div>
+                <div style={{ fontWeight: 800, fontSize: 15, color: "var(--danger)" }}>No Rules Configured!</div>
+                <div style={{ fontSize: 12, color: "var(--text2)" }}>You must set up rules before uploading documents</div>
+              </div>
+            </div>
+            <div style={{ padding: "14px 18px" }}>
+              <div style={{ fontSize: 13, color: "var(--text2)", marginBottom: 12 }}>
+                Go to Rule Setup and add at least one rule before uploading documents.
+              </div>
+              <Btn variant="primary" size="sm" onClick={() => setPage("setup")}>Go to Rule Setup →</Btn>
+            </div>
+          </Card>
+        )}
+
+        {result && !result.error && (
           <Card style={{ overflow: "hidden", animation: "fadeUp .4s ease" }}>
             <div style={{ padding: "13px 18px", background: approved ? "var(--success-light)" : rejected ? "var(--danger-light)" : "var(--warn-light)", display: "flex", alignItems: "center", gap: 10 }}>
               <span style={{ fontSize: 18 }}>{approved ? "✅" : rejected ? "❌" : "⚠️"}</span>
